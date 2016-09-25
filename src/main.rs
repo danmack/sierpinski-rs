@@ -1,4 +1,6 @@
 //! sierpinski triangle image generator
+//!
+//! an example of using rust to generate a png image file
 
 extern crate image;
 extern crate rand;
@@ -13,8 +15,11 @@ pub struct Point {
     y: u32,
 }
 
-const WIDTH:  u32 = 800;
-const HEIGHT: u32 = 600;
+
+/// width of the png image
+pub const WIDTH:  u32 = 800;
+/// height of the png image
+pub const HEIGHT: u32 = 600;
 
 /// main program
 pub fn main() {
@@ -33,18 +38,20 @@ pub fn main() {
         Point {x: 0, y: HEIGHT},
         Point {x: WIDTH, y: HEIGHT},
     ];
-    let mut num: usize;
     
-    let mut p = Point { x: 350, y: 350 };
-    let pixel = img[(0, 0)];
+    let mut p = Point { x: rand::thread_rng().gen_range(0, WIDTH),
+                        y: rand::thread_rng().gen_range(0, HEIGHT),
+    };
 
+    let pixel = img[(0, 0)];
     while cnt > 0 {
         cnt = cnt - 1;
-        num = rand::thread_rng().gen_range(0,3);
+        let num = rand::thread_rng().gen_range(0,3);
         p.x = (p.x + pts[num].x) / 2;
         p.y = (p.y + pts[num].y) / 2;
         img.put_pixel(p.x, p.y, pixel);
     }
+
     let ref mut fout = File::create(&Path::new("tri.png")).unwrap();
     let _ = image::ImageLuma8(img).save(fout, image::PNG);
 }
