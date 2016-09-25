@@ -1,0 +1,9 @@
+[package]
+name = "triangle"
+version = "0.1.0"
+authors = ["Aquamo <aquamo@macktronics.com>"]
+
+[dependencies]
+image = "*"
+rand  = "*"
+
