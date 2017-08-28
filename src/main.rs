@@ -14,7 +14,6 @@ pub struct Point {
     y: u32,
 }
 
-
 /// width of the png image
 pub const WIDTH:  u32 = 800;
 /// height of the png image
@@ -37,7 +36,7 @@ pub fn main() {
         Point {x: 0, y: HEIGHT},
         Point {x: WIDTH, y: HEIGHT},
     ];
-    
+
     let mut p = Point { x: rand::thread_rng().gen_range(0, WIDTH),
                         y: rand::thread_rng().gen_range(0, HEIGHT),
     };
@@ -51,6 +50,12 @@ pub fn main() {
         img.put_pixel(p.x, p.y, pixel);
     }
 
-    let ref mut fout = File::create("tri.png").unwrap();
-    let _ = image::ImageLuma8(img).save(fout, image::PNG);
+    match File::create("tri.png") {
+        Ok(ref mut fd)  => {
+            let _ = image::ImageLuma8(img).save(fd, image::PNG);
+        }
+        Err(e)  => {
+            panic!("there was a problem creating the file: {:?}", e);
+        }
+    }
 }
