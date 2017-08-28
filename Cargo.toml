@@ -1,7 +1,7 @@
 [package]
 name = "triangle"
-version = "0.1.0"
-authors = ["Aquamo <aquamo@macktronics.com>"]
+version = "0.1.1"
+authors = ["Dan Mack <mack@macktronics.com>"]
 
 [dependencies]
 image = "*"
