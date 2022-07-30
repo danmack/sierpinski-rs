@@ -6,7 +6,6 @@ extern crate image;
 extern crate rand;
 
 use rand::Rng;
-use std::fs::File;
 
 /// points used to build the triangle and plot points on the canvas
 pub struct Point {
@@ -37,25 +36,18 @@ pub fn main() {
         Point {x: WIDTH, y: HEIGHT},
     ];
 
-    let mut p = Point { x: rand::thread_rng().gen_range(0, WIDTH),
-                        y: rand::thread_rng().gen_range(0, HEIGHT),
+    let mut p = Point { x: rand::thread_rng().gen_range(0..WIDTH),
+                        y: rand::thread_rng().gen_range(0..HEIGHT),
     };
 
     let pixel = img[(0, 0)];
     while cnt > 0 {
         cnt = cnt - 1;
-        let num = rand::thread_rng().gen_range(0,3);
+        let num = rand::thread_rng().gen_range(0..3);
         p.x = (p.x + pts[num].x) / 2;
         p.y = (p.y + pts[num].y) / 2;
         img.put_pixel(p.x, p.y, pixel);
     }
 
-    match File::create("tri.png") {
-        Ok(ref mut fd)  => {
-            let _ = image::ImageLuma8(img).save(fd, image::PNG);
-        }
-        Err(e)  => {
-            panic!("there was a problem creating the file: {:?}", e);
-        }
-    }
+    img.save("tri.png").unwrap();
 }
