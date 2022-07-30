@@ -7,4 +7,13 @@ triangle is generated using the chaos method, storage in an image
 buffer, and then written out to a file named "tri.png" in the current
 working directory.
 
+````
+cargo run
+
+# linux
+xdg-open tri.png
+
+# macos
+open tri.png
+````
 
